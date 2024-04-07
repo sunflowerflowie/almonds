@@ -6,14 +6,14 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Note
 
 
-class NoteListCreate(generics.ListAPIView):
+class NoteListCreate(generics.ListCreateAPIView):
     serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated] # Logged in before interact with api
 
     def get_queryset(self):
         user = self.request.user
 
-        return Note.objects.filter(author=user)
+        return Note.objects.filter(author=user) # Can only see their own Note
     
     def perform_create(self, serializer):
         if serializer.is_valid():
@@ -35,4 +35,4 @@ class NoteDelete(generics.DestroyAPIView):
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny] # Allows anyone to access api

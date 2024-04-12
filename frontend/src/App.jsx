@@ -5,6 +5,7 @@ import Register from "./pages/Register"
 import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import ProtectedRout from "./components/ProtectedRout"
+import Connection from "./pages/Connection"
 
 
 // Clear RefreshToken, AccessToken
@@ -27,7 +28,7 @@ function App() {
           path="/"
           element={
             <ProtectedRout>
-              <Home />
+              <Connection />
             </ProtectedRout>
           }
         />

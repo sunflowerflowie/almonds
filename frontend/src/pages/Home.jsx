@@ -4,11 +4,11 @@ import Note from "../components/Note";
 import "../styles/Home.css"
 
 function Home() {
-  const [notes, setNotes] = useState([]);
-  const [content, setContent] = useState("");
+  const [notes, setNotes] = useState([]); // Store note, fetch from server
+  const [content, setContent] = useState(""); // Input value
   const [title, setTitle] = useState("");
 
-  useEffect(() => {
+  useEffect(() => { // Fetch note
     getNotes();
   }, []);
 
@@ -46,10 +46,12 @@ function Home() {
       .catch((err) => alert(err));
   };
 
+  // notes: array for object
+  // 
   return (
     <div>
       <div>
-        <h2>Notes</h2>
+        <h2>Notes</h2> 
         {notes.map((note) => (
           <Note note={note} onDelete={deleteNote} key={note.id} />
         ))}

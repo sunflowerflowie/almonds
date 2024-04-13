@@ -56,8 +56,8 @@ class DatabaseResponsibilities(models.Model):
         db_table = 'database_responsibilities'
 
 class DatabaseDepartments(models.Model):
-    connection = models.OneToOneField(DatabaseConnections, models.DO_NOTHING, primary_key=True)  # The composite primary key (connection_id, department_id) found, that is not supported. The first column is selected.
-    department = models.ForeignKey('DepartmentTags', models.DO_NOTHING)
+    connection = models.ForeignKey(DatabaseConnections, models.DO_NOTHING)
+    department = models.ForeignKey('DepartmentTags', models.DO_NOTHING, null=True)
 
     class Meta:
         managed = True

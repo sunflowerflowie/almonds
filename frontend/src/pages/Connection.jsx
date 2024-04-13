@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, } from "react";
 import api from "../api";
 import ConnectionForm from "../components/ConnectionForm";
 import "../styles/Home.css";
+import { useNavigate } from "react-router-dom";
+
 
 function Connection() {
   const [forms, setForms] = useState([]);
@@ -13,6 +15,13 @@ function Connection() {
   const [description, setDescription] = useState("");
   const [platforms, setPlatforms] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("");
+
+  let navigate = useNavigate();
+
+  // Navigate to the data catalog page and pass the connection_id
+  function handleShowTables(connection_id) {
+    navigate(`/catalog/tables/${connection_id}`);
+  }
 
   useEffect(() => {
     getConnection();
@@ -85,6 +94,7 @@ function Connection() {
           <ConnectionForm
             form={form}
             onDelete={() => deleteConnection(form.connection_id)} //{deleteConnection}
+            onCatalog={() => handleShowTables(form.connection_id)}
             key={form.connection_id}
           />
         ))}

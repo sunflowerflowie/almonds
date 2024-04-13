@@ -4,7 +4,6 @@ from .models import DatabasePlatforms, DatabaseConnections
 
 
 class ConnectionSerializer(serializers.ModelSerializer):
-    #
     platform_name = serializers.ReadOnlyField(source='platform.platform_name')
 
     class Meta:

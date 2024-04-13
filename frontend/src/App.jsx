@@ -6,6 +6,7 @@ import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import ProtectedRout from "./components/ProtectedRout"
 import Connection from "./pages/Connection"
+import DataCatalog from './pages/DataCatalog'; 
 
 
 // Clear RefreshToken, AccessToken
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout/>}/>
         <Route path="/register" element={<RegisterAndLogout />} />
+        <Route path="/catalog/tables/:connection_id" element={<DataCatalog />} />
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>

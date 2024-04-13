@@ -2,8 +2,7 @@ import React from "react";
 import "../styles/Note.css"
 
 
-function ConnectionForm({ form, onDelete }) {
-  //const formattedDate = new Date(form.created_at).toLocaleDateString("en-US");
+function ConnectionForm({ form, onDelete, onCatalog }) {
   console.log("Form ID:", form.connection_id);
 
   return (
@@ -18,6 +17,9 @@ function ConnectionForm({ form, onDelete }) {
       <p className="connection-platform">{form.platform_name}</p>
       <button className="delete-button" onClick={() => onDelete(form.connection_id)}>
         Delete
+      </button>
+      <button className="tables-button" onClick={() => onCatalog(form.connection_id)}>
+        Data Catalog
       </button>
     </div>
   );

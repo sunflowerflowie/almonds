@@ -1,0 +1,47 @@
+.data-dictionary {
+    margin: 20px;
+    padding: 10px;
+  }
+  
+  .table-container {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .table-name {
+    font-size: 24px;
+    color: #333;
+    margin-top: 0;
+    padding-bottom: 10px;
+  }
+  
+  .attributes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .attributes-table th,
+  .attributes-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .attributes-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .attributes-table td {
+    background-color: #fafafa;
+  }
+  
+  .attributes-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .attributes-table tr:hover {
+    background-color: #ddd;
+  }
+  

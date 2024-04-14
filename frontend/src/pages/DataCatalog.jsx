@@ -1,28 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 
 function DataCatalog() {
   const [tables, setTables] = useState([]);
-  const { connection_id } = useParams(); // Get the connection ID from the URL
-
-  // useEffect(() => {
-  //     api(`/catalog/tables/${connection_id}`)
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         if (data.tables) {
-  //           setTables(data.tables);
-  //         } else {
-  //           console.error('Error fetching tables:', data.error);
-  //         }
-  //       })
-  //       .catch(error => console.error('Error fetching tables:', error));
-  // }, [connection_id]);
+  const { connection_id } = useParams();
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   useEffect(() => {
-    api
-      .get(`/catalog/tables/${connection_id}`)
+    api.get(`/catalog/tables/${connection_id}`)
       .then((res) => {
         if (res.data.tables) {
           setTables(res.data.tables);
@@ -33,9 +19,15 @@ function DataCatalog() {
       .catch((error) => console.error("Error fetching tables:", error));
   }, [connection_id]);
 
+  // Function to navigate using useNavigate
+  const navigateToDataDictionary = () => {
+    navigate(`/data-dictionary/${connection_id}`);
+  };
+
   return (
     <div>
       <h1>Tables in Database</h1>
+      <button onClick={navigateToDataDictionary}>View Data Dictionary</button>
       <ul>
         {tables.map((table, index) => (
           <li key={index}>{table.table_name}</li>

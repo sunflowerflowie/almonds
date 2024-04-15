@@ -1,26 +1,35 @@
 import React from "react";
-import "../styles/Note.css"
+import "../styles/ConnectionForm.css";
+import { useNavigate } from "react-router-dom";
 
+function ConnectionForm({ form, onDelete }) {
+  const navigate = useNavigate();
 
-function ConnectionForm({ form, onDelete, onCatalog }) {
-  console.log("Form ID:", form.connection_id);
+  // Directly navigate and pass the form data
+  const handleCatalogNavigation = () => {
+    navigate(`/catalog/tables/${form.connection_id}`, { state: { form } });
+  };
 
   return (
-    <div>
-      <p className="database_name">{form.database_name}</p>
-      <p className="hostname">{form.hostname}</p>
-      <p className="port">{form.port}</p>
-      <p className="username">{form.username}</p>
-      <p className="password">{form.password}</p>
-      <p className="description">{form.description}</p>
-      <p className="platform">{form.platform}</p>
-      <p className="connection-platform">{form.platform_name}</p>
-      <button className="delete-button" onClick={() => onDelete(form.connection_id)}>
-        Delete
-      </button>
-      <button className="tables-button" onClick={() => onCatalog(form.connection_id)}>
-        Data Catalog
-      </button>
+    <div className="connection-card">
+      <h3>{form.database_name}</h3>
+      <div className="connection-details">
+        <p><strong>Hostname:</strong> {form.hostname}</p>
+        <p><strong>Port:</strong> {form.port}</p>
+        <p><strong>Username:</strong> {form.username}</p>
+        <p><strong>Description:</strong> {form.description}</p>
+        <p><strong>Platform:</strong> {form.platform_name}</p>
+        <p><strong>Role:</strong> {form.role_name}</p>
+        <p><strong>Department:</strong> {form.department_name}</p>
+      </div>
+      <div className="connection-actions">
+        <button onClick={handleCatalogNavigation} className="tables-button">
+          View Data Catalog
+        </button>
+        <button onClick={() => onDelete(form.connection_id)} className="delete-button">
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,9 @@
-import { useState, useEffect, } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
 import ConnectionForm from "../components/ConnectionForm";
-import "../styles/Home.css";
+import "../styles/Connection.css";
+import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-
 
 function Connection() {
   const [forms, setForms] = useState([]);
@@ -15,6 +15,10 @@ function Connection() {
   const [description, setDescription] = useState("");
   const [platforms, setPlatforms] = useState([]);
   const [selectedPlatform, setSelectedPlatform] = useState("");
+  const [roles, setRoles] = useState([]);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [departmentTags, setDepartmentTags] = useState([]);
+  const [selectedDepartmentTag, setSelectedDepartmentTag] = useState("");
 
   let navigate = useNavigate();
 
@@ -26,17 +30,40 @@ function Connection() {
   useEffect(() => {
     getConnection();
   }, []);
-
+  /* Makes the icon color inherit from the text color */
   useEffect(() => {
     api
-      .get("/connection/platforms/") 
+      .get("/connection/platforms/")
       .then((response) => {
         setPlatforms(response.data);
         if (response.data.length > 0) {
-          setSelectedPlatform(response.data[0].platform_id); 
+          setSelectedPlatform(response.data[0].platform_id);
         }
       })
       .catch((error) => console.error("Error fetching platforms:", error));
+    // Fetch Roles
+    api
+      .get("/connection/roles/")
+      .then((response) => {
+        setRoles(response.data);
+        if (response.data.length > 0) {
+          setSelectedRole(response.data[0].role_id);
+        }
+      })
+      .catch((error) => console.error("Error fetching roles:", error));
+
+    // Fetch Department Tags
+    api
+      .get("/connection/departments/")
+      .then((response) => {
+        setDepartmentTags(response.data);
+        if (response.data.length > 0) {
+          setSelectedDepartmentTag(response.data[0].department_id);
+        }
+      })
+      .catch((error) =>
+        console.error("Error fetching department tags:", error)
+      );
   }, []);
 
   // Get Connection Form
@@ -46,7 +73,7 @@ function Connection() {
       .then((rest) => rest.data)
       .then((data) => {
         console.log("Form loaded", data); //
-        data.forEach(form => console.log(form)); //
+        data.forEach((form) => console.log(form)); //
         setForms(data);
       })
       .catch((err) => alert(err));
@@ -77,6 +104,8 @@ function Connection() {
         password,
         description,
         platform: selectedPlatform,
+        role: selectedRole,
+        department_tag: selectedDepartmentTag,
       })
       .then((res) => {
         if (res.status === 201) alert("Connection Created!");
@@ -88,6 +117,10 @@ function Connection() {
 
   return (
     <div>
+      <div>
+        <Navbar />
+      </div>
+      <div className="content-container"></div>
       <div>
         <h2>Connection Forms</h2>
         {forms.map((form) => (
@@ -111,6 +144,34 @@ function Connection() {
           {platforms.map((platform) => (
             <option key={platform.id} value={platform.id}>
               {platform.platform_name}{" "}
+            </option>
+          ))}
+        </select>
+        <br />
+        <label htmlFor="platform">Responsibilities:</label>
+        <select
+          id="role"
+          value={selectedRole}
+          onChange={(e) => setSelectedRole(e.target.value)}
+          required
+        >
+          {roles.map((role) => (
+            <option key={role.role_id} value={role.role_id}>
+              {role.role_name}
+            </option>
+          ))}
+        </select>
+        <br />
+        <label htmlFor="platform">Departments:</label>
+        <select
+          id="department_tag"
+          value={selectedDepartmentTag}
+          onChange={(e) => setSelectedDepartmentTag(e.target.value)}
+          required
+        >
+          {departmentTags.map((tag) => (
+            <option key={tag.department_id} value={tag.department_id}>
+              {tag.department_name}
             </option>
           ))}
         </select>

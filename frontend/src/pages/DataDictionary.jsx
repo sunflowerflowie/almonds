@@ -1,33 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
-import "../styles/DataDictionary.css"
+import Navbar from "../components/Navbar";
+import "../styles/DataDictionary.css";
 
 function DataDictionary() {
   const { connection_id } = useParams();
   const [dataDictionary, setDataDictionary] = useState([]);
 
   useEffect(() => {
-    // Assuming you have a list of tables from somewhere or another API call
-    const fetchAttributes = async (tableName) => {
-      try {
-        const response = await api.get(
-          `/catalog/attributes/${connection_id}/${tableName}`
-        );
-        if (response.data.attributes) {
-          return { tableName, attributes: response.data.attributes };
-        }
-      } catch (error) {
-        console.error(`Error fetching attributes for ${tableName}:`, error);
-        return { tableName, attributes: [], error: true };
-      }
-    };
-
     const fetchDataDictionary = async () => {
-      // Placeholder for fetching table names if needed
-      const tables = await api.get(`/catalog/tables/${connection_id}`);
-      const promises = tables.data.tables.map((table) =>
-        fetchAttributes(table.table_name)
+      const tablesResponse = await api.get(`/catalog/tables/${connection_id}`);
+      const promises = tablesResponse.data.tables.map((table) =>
+        api
+          .get(`/catalog/attributes/${connection_id}/${table.table_name}`)
+          .then((response) => ({
+            tableName: table.table_name,
+            attributes: response.data.attributes || [],
+            error: !response.data.attributes,
+          }))
       );
       const results = await Promise.all(promises);
       setDataDictionary(results);
@@ -38,11 +29,15 @@ function DataDictionary() {
 
   return (
     <div className="data-dictionary">
+      <div>
+        <Navbar />
+      </div>
+      <div className="content-container"></div>
       <h1>Data Dictionary</h1>
       {dataDictionary.map((table, index) => (
         <div key={index} className="table-container">
-          <h2 className="table-name">{table.tableName}</h2>
-          <table className="attributes-table">
+          <h2>{table.tableName}</h2>
+          <table>
             <thead>
               <tr>
                 <th>Column Name</th>

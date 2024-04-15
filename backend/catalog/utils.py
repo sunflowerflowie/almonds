@@ -23,21 +23,6 @@ def create_database_connection(connection):
         print(f"Error connecting to database {connection.database_name}: {e}")
 
         return None
-    
-# """
-# Fetches(All public schema) table names from the given database connection.
-# """    
-# def fetch_table_names(conn):
-#     if conn is not None:
-#         cursor = conn.cursor()
-#         cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public'")
-#         table_names = cursor.fetchall()
-#         cursor.close()
-#         # conn.close()
-
-#         return table_names
-    
-#     return []
 
 def fetch_table_names(conn):
     if conn is not None:

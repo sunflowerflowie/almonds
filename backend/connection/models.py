@@ -20,6 +20,8 @@ class DatabaseConnections(models.Model):
     description = models.TextField(blank=True, null=True)
     created_by = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True, db_column='created_by_user_id')
     platform = models.ForeignKey('DatabasePlatforms', models.DO_NOTHING, blank=True, null=True)
+    role = models.ForeignKey('Roles', models.DO_NOTHING, blank=True, null=True)
+    department_tag = models.ForeignKey('DepartmentTags', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -44,24 +46,5 @@ class DepartmentTags(models.Model):
     class Meta:
         managed = False
         db_table = 'department_tags'
-
-# Junction Tables
-class DatabaseResponsibilities(models.Model):
-    responsibility_id = models.AutoField(primary_key=True)
-    connection = models.ForeignKey(DatabaseConnections, models.DO_NOTHING, blank=True, null=True)
-    role = models.ForeignKey('Roles', models.DO_NOTHING, blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'database_responsibilities'
-
-class DatabaseDepartments(models.Model):
-    connection = models.ForeignKey(DatabaseConnections, models.DO_NOTHING)
-    department = models.ForeignKey('DepartmentTags', models.DO_NOTHING, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'database_departments'
-        unique_together = (('connection', 'department'),)
 
 

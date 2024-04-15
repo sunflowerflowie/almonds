@@ -1,13 +1,21 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ConnectionSerializer, DatabasePlatformSerializer 
+from .serializers import ConnectionSerializer, DatabasePlatformSerializer, RolseSerializer, DepartmentsSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import DatabasePlatforms, DatabaseConnections
+from .models import DatabasePlatforms, DatabaseConnections, Roles, DepartmentTags
 
 
 class DatabasePlatformList(generics.ListAPIView):
     queryset = DatabasePlatforms.objects.all()
     serializer_class = DatabasePlatformSerializer
+
+class RoleList(generics.ListAPIView):
+    queryset = Roles.objects.all()
+    serializer_class = RolseSerializer
+
+class DepartmentTagList(generics.ListAPIView):
+    queryset = DepartmentTags.objects.all()
+    serializer_class = DepartmentsSerializer
 
 class ConnectionListCreate(generics.ListCreateAPIView):
     serializer_class = ConnectionSerializer

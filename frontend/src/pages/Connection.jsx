@@ -5,6 +5,7 @@ import "../styles/Connection.css";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
+
 function Connection() {
   const [forms, setForms] = useState([]);
   const [database_name, setDatabaseName] = useState("");
@@ -30,8 +31,9 @@ function Connection() {
   useEffect(() => {
     getConnection();
   }, []);
-  /* Makes the icon color inherit from the text color */
+  
   useEffect(() => {
+    // Fetch Plarforms
     api
       .get("/connection/platforms/")
       .then((response) => {

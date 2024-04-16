@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'database_platforms',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'department_tags',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'roles',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(

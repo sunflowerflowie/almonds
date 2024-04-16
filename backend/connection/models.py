@@ -7,7 +7,7 @@ class DatabasePlatforms(models.Model):
     platform_name = models.CharField(unique=True, max_length=255)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'database_platforms'
 
 class DatabaseConnections(models.Model):
@@ -36,7 +36,7 @@ class Roles(models.Model):
         return self.role_name
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'roles'
 
 class DepartmentTags(models.Model):
@@ -44,7 +44,7 @@ class DepartmentTags(models.Model):
     department_name = models.CharField(unique=True, max_length=255)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'department_tags'
 
 
